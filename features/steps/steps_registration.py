@@ -4,6 +4,10 @@ from selenium import webdriver
 
 @given('Открываем сайт "{url}"')
 def step_launch_browser(context, url):
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--start-maximized")
+    context.driver = webdriver.Chrome(options=chrome_options)
     context.driver.get(url)
 
 
@@ -31,3 +35,4 @@ def step_clicked_button_registration(context):
 def step_check_result(context, extended_result):
     result = context.driver.find_element('xpath', '//a[@class="dropdown-toggle"]').text
     assert extended_result == result
+    context.driver.quit()
